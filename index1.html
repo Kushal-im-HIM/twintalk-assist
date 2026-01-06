@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TwinTalk</title>
+
+  <!-- MediaPipe (unchanged) -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="logo">TwinTalk</div>
+    <div class="nav-actions">
+      <button class="nav-btn active" onclick="switchModule('speech')">Speech Lab</button>
+      <button class="nav-btn" onclick="switchModule('sign')">Sign Lab</button>
+    </div>
+  </nav>
+
+  <!-- ================= SPEECH LAB ================= -->
+  <section id="speechModule" class="module active">
+
+    <div class="card">
+      <div class="speech-header">
+        <span id="status">● Disconnected</span>
+
+        <select id="mode">
+          <option value="native">Native</option>
+          <option value="hinglish">Hinglish</option>
+          <option value="tinglish">Tinglish</option>
+          <option value="english">English</option>
+        </select>
+      </div>
+
+      <div id="caption-box">
+        Waiting for captions...
+      </div>
+
+      <button id="connectBtn">Connect</button>
+
+      <button id="historyBtn">Show History</button>
+
+      <div id="historyPanel" style="display:none;">
+        <ul id="historyList"></ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= SIGN LAB ================= -->
+  <section id="signModule" class="module">
+
+    <div class="sign-layout">
+      <div class="card">
+        <video id="video" autoplay playsinline></video>
+        <button id="startVideo">Start Camera</button>
+      </div>
+
+      <div class="card">
+        <h3>Current Sentence</h3>
+        <div id="signOutput">
+          Waiting for signs…
+        </div>
+      </div>
+    </div>
+
+    <div class="sign-actions">
+      <button id="clearSign">Clear</button>
+      <button id="deleteLastSign">Delete Last</button>
+      <button id="speakSign">Speak</button>
+      <button id="enhanceSign">Enhance</button>
+    </div> <br> <br>
+
+    <div class="card sign-guide">
+      <details open>
+        <summary>🖐 Available ISL Signs</summary>
+
+        <div class="sign-list">
+          <div class="sign-item">✋ <span>HELLO</span> <small>Open palm, thumb wide</small></div>
+          <div class="sign-item">✊ <span>YES</span> <small>Tight fist</small></div>
+          <div class="sign-item">✌ <span>NO</span> <small>Index + Middle (V shape)</small></div>
+          <div class="sign-item">☝ <span>WATER</span> <small>Only index finger up</small></div>
+          <div class="sign-item">🤏 <span>FOOD</span> <small>All fingertips pinched</small></div>
+          <div class="sign-item">👌 <span>OK</span> <small>Thumb + Index circle</small></div>
+          <div class="sign-item">🙏 <span>THANK YOU</span> <small>Flat palm, fingers together</small></div>
+          <div class="sign-item">🌅 <span>GOOD MORNING</span> <small>C-shaped hand facing up</small></div>
+          <div class="sign-item">🤙 <span>ME</span> <small>Only pinky finger up</small></div>
+          <div class="sign-item">🙏 <span>PLEASE</span> <small>Flat palm, fingers together</small></div>
+          <div class="sign-item">🖐️ <span>STOP</span> <small>Palm open, fingers spread</small></div>
+          <div class="sign-item">👉 <span>YOU</span> <small>Index finger pointing</small></div>
+          <div class="sign-item">👍 <span>HELP</span> <small>Fist with thumb up</small></div>
+          <div class="sign-item">🤟 <span>LOVE</span> <small>Index + pinky + thumb</small></div>
+
+        </div>
+
+        <p class="sign-hint">
+          Tip: Hold each sign steady for ~1 second for accurate detection.
+        </p>
+      </details>
+    </div>
+
+
+  </section>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

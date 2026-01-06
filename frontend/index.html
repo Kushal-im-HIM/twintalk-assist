@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TwinTalk</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo">TwinTalk</div>
+    <div class="nav-actions">
+      <button class="nav-btn active" onclick="switchModule('speech')">Speech Lab</button>
+      <button class="nav-btn" onclick="switchModule('sign')">Sign Lab</button>
+    </div>
+  </nav>
+
+  <section id="speechModule" class="module active">
+
+    <div class="card">
+      <div class="speech-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span id="status">● Disconnected</span>
+          <span id="timer" style="margin-left: 15px; opacity: 0.6; font-family: monospace;">00:00</span>
+        </div>
+
+        <div style="text-align: right;">
+          <select id="mode">
+            <option value="native">Native</option>
+            <option value="hinglish">Hinglish</option>
+            <option value="tinglish">Tinglish</option>
+            <option value="english">English</option>
+          </select>
+          <br>
+          <small style="opacity: 0.5; font-size: 0.7rem;">Native: Original | Hinglish: Phonetic</small>
+        </div>
+      </div>
+
+      <div id="caption-box" style="overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+        Waiting for captions...
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button id="connectBtn">Connect</button>
+        <button onclick="clearCaptions()" style="background: rgba(255,255,255,0.1); color: white;">Clear</button>
+        <button onclick="downloadTranscript()"
+          style="background: rgba(255,255,255,0.1); color: white;">Download</button>
+        <button id="historyBtn">Show History</button>
+      </div>
+
+      <div id="historyPanel" style="display:none; margin-top: 20px;">
+        <ul id="historyList"></ul>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="signModule" class="module">
+    <div class="sign-layout">
+      <div class="card">
+        <video id="video" autoplay playsinline></video>
+        <button id="startVideo">Start Camera</button>
+      </div>
+
+      <div class="card">
+        <h3>Current Sentence</h3>
+        <div id="signOutput">
+          Waiting for signs…
+        </div>
+      </div>
+    </div>
+
+    <div class="sign-actions">
+      <button id="clearSign">Clear</button>
+      <button id="deleteLastSign">Delete Last</button>
+      <button id="speakSign">Speak</button>
+      <button id="enhanceSign">Enhance</button>
+    </div> <br> <br>
+
+    <div class="card sign-guide">
+      <details open>
+        <summary>🖐 Available ISL Signs (Creative Signature Mode)</summary>
+        <div class="sign-list">
+          <div class="sign-item">🖐️ <span>STOP</span> <small>Palm open, fingers spread WIDE</small></div>
+          <div class="sign-item">🙏 <span>PLEASE</span> <small>Palm flat, fingers GLUED together</small></div>
+          <div class="sign-item">🖖 <span>HELLO</span> <small>Index, Middle, Pinky UP; RING TUCKED</small></div>
+          <div class="sign-item">🤚 <span>THANK YOU</span> <small>Palm flat, THUMB TUCKED across palm</small></div>
+
+          <div class="sign-item">🤏 <span>FOOD</span> <small>All fingertips pinched together</small></div>
+          <div class="sign-item">👌 <span>OK</span> <small>Thumb + Index circle, others up</small></div>
+          <div class="sign-item">☝ <span>WATER</span> <small>Only index finger straight up</small></div>
+          <div class="sign-item">✊ <span>YES</span> <small>Tight fist, all fingers closed</small></div>
+          <div class="sign-item">✌ <span>NO</span> <small>Index + Middle up (V shape)</small></div>
+          <div class="sign-item">🤙 <span>ME</span> <small>Only pinky finger straight up</small></div>
+          <div class="sign-item">👉 <span>YOU</span> <small>Index pointing, thumb extended</small></div>
+          <div class="sign-item">👍 <span>HELP</span> <small>Tight fist with thumb UP</small></div>
+          <div class="sign-item">🤟 <span>LOVE</span> <small>Thumb, Index, and Pinky extended</small></div>
+          <div class="sign-item">🌅 <span>GOOD MORNING</span> <small>C-shaped hand facing upward</small></div>
+        </div>
+        <div class="sign-hint"
+          style="margin-top: 15px; padding: 10px; background: rgba(250, 204, 21, 0.1); border-radius: 8px; border-left: 4px solid var(--accent);">
+          <strong>💡 Pro Tip for Demo:</strong>
+          For <b>HELLO</b>, make sure your ring finger is folded down into your palm while the others stay up. This
+          "signature" prevents the app from confusing it with STOP or PLEASE.
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
